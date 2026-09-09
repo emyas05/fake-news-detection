@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TruthLens - Fake News & AI Image Detector</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🔍</span>
+        <span class="logo-text">TruthLens</span>
+      </div>
+      <p class="header-sub">Fake News Detection &amp; AI Image Analysis</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('text')">📰 Fake News Detection</button>
+      <button class="tab-btn" onclick="switchTab('image')">🖼 AI Image Detection</button>
+    </div>
+
+    <!-- TAB TEXT -->
+    <section id="tab-text" class="tab-panel active">
+      <div class="card">
+        <h2>Analyser un article de presse</h2>
+        <p class="hint">Colle un article ou un extrait (minimum 10 caractères) &bull; Ctrl+Enter pour analyser</p>
+        <textarea id="news-input" placeholder="Ex: Scientists discover that the Earth is flat and NASA has been hiding this for decades..." rows="7"></textarea>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="analyzeText()">Analyser l'article</button>
+          <button class="btn-secondary" onclick="clearText()">Effacer</button>
+        </div>
+        <div id="text-loader" class="loader hidden">Analyse en cours...</div>
+        <div id="text-result" class="result-box hidden"></div>
+      </div>
+      <div class="card examples-card">
+        <h3>Exemples rapides</h3>
+        <div class="examples-grid">
+          <div class="example-chip fake" onclick="setExample('fake1')">Fake : complot gouvernemental</div>
+          <div class="example-chip real" onclick="setExample('real1')">Real : article économique</div>
+          <div class="example-chip fake" onclick="setExample('fake2')">Fake : santé / remède caché</div>
+          <div class="example-chip real" onclick="setExample('real2')">Real : découverte scientifique</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB IMAGE -->
+    <section id="tab-image" class="tab-panel hidden">
+      <div class="card">
+        <h2>Détection d'image générée par IA</h2>
+        <p class="hint">Upload une image JPG, PNG ou WEBP (max 16 MB)</p>
+        <div class="drop-zone" id="drop-zone"
+             onclick="document.getElementById('img-input').click()"
+             ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropImage(event)">
+          <div class="drop-icon">🖼</div>
+          <p>Glisse une image ici ou <strong>clique pour choisir</strong></p>
+          <p class="drop-hint">JPG &bull; PNG &bull; WEBP &bull; BMP</p>
+        </div>
+        <input type="file" id="img-input" accept="image/*" onchange="handleImageUpload(event)" style="display:none">
+        <div id="img-preview-container" class="hidden">
+          <img id="img-preview" src="" alt="preview">
+          <div class="btn-row" style="justify-content:center">
+            <button class="btn-primary" onclick="analyzeImage()">Analyser l'image</button>
+            <button class="btn-secondary" onclick="clearImage()">Effacer</button>
+          </div>
+        </div>
+        <div id="image-loader" class="loader hidden">Analyse en cours...</div>
+        <div id="image-result" class="result-box hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projet ML &mdash; NLP (TF-IDF + LinearSVC) &amp; Deep Learning (CNN)</p>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
